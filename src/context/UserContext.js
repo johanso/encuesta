@@ -1,11 +1,9 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useEffect } from "react";
 import { helpHttp } from './../helpers/helpHttp';
 
 export const UserContext = createContext();
 
 const UserProvider = ({children}) => {
-
-    const [dataForm, setDataform] = useState([]);
 
     const api = helpHttp()
     const url = "/employee/byIdentification/11201970"
