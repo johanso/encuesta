@@ -4,7 +4,6 @@ import MultiStepForm from './components/MultiStepForm';
 import InputID from './components/InputID';
 // Context
 import QuestionProvider from './context/QuestionsContext';
-import UserProvider from './context/UserContext';
 
 function App() {
 
@@ -19,23 +18,21 @@ function App() {
    }
 
    return (
-      <UserProvider>
-         <QuestionProvider>
-            <div className="wrapper_centering">
-               <div className="container_centering">
-                  <div className="container">
+      <QuestionProvider>
+         <div className="wrapper_centering">
+            <div className="container_centering">
+               <div className="container">
 
-                     {
-                        !idUser ? 
-                        <InputID getUserValid={getUserValid} /> :
-                        <MultiStepForm getDataUser={getDataUser} />
-                     }
+                  {
+                     !idUser ? 
+                     <InputID getUserValid={getUserValid} /> :
+                     <MultiStepForm getDataUser={getDataUser} />
+                  }
 
-                  </div>
                </div>
             </div>
-         </QuestionProvider>
-      </UserProvider>
+         </div>
+      </QuestionProvider>
    );
 }
 
