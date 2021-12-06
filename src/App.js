@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+// Components
+import MultiStepForm from './components/MultiStepForm';
+import InputID from './components/InputID';
+// Context
+import QuestionProvider from './context/QuestionsContext';
+import UserProvider from './context/UserContext';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+   const [idUser, isetIdUser] = useState(null)
+
+   const getUserValid = (data) => {
+      isetIdUser(data)
+   }
+   
+   const getDataUser = (data) => {
+      isetIdUser(data)
+   }
+
+   return (
+      <UserProvider>
+         <QuestionProvider>
+            <div className="wrapper_centering">
+               <div className="container_centering">
+                  <div className="container">
+
+                     {
+                        !idUser ? 
+                        <InputID getUserValid={getUserValid} /> :
+                        <MultiStepForm getDataUser={getDataUser} />
+                     }
+
+                  </div>
+               </div>
+            </div>
+         </QuestionProvider>
+      </UserProvider>
+   );
 }
 
 export default App;
