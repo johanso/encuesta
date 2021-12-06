@@ -6,6 +6,7 @@ export const QuestionContext = createContext();
 const QuestionProvider = ({children}) => {
 
     const [dataForm, setDataform] = useState([]);
+    const [dataResult, setDataResult] = useState([]);
     const [numberQuestions, setNumberQuestions] = useState(0);
     const [currentPage, setcurrentPage] = useState(1);
     const [itemsPerPage, setitemsPerPage] = useState(1);
@@ -39,6 +40,10 @@ const QuestionProvider = ({children}) => {
     }, [])
 
 
+    const getDataResult = (data) => {
+        setDataResult(data)
+    }
+
     const handleNextbtn = () => {
         setcurrentPage(currentPage + 1);
         if (currentPage + 1 > maxPageNumberLimit) {
@@ -62,6 +67,8 @@ const QuestionProvider = ({children}) => {
         currentPage,
         setitemsPerPage,
         setpageNumberLimit,
+        dataResult,
+        getDataResult,
         pages,
         handleNextbtn,
         handlePrevbtn,
