@@ -24,7 +24,7 @@ function App() {
 
          <header className="bg-white shadow-sm">
             <div className="row">
-               <div className="col-12">
+               <div className="col-12 text-center text-lg-left">
                   <img src={logo} alt="logo" height="60" />
                </div>
             </div>
