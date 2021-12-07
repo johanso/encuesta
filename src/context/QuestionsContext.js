@@ -23,16 +23,14 @@ const QuestionProvider = ({children}) => {
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = dataForm.slice(indexOfFirstItem, indexOfLastItem);
 
-
     const api = helpHttp()
-    const url = "http://34.238.123.231:3080/formulary/first"
+    const url = "http://localhost:5000/dataForm"
 
     useEffect(() => {
         api.get(url).then(resp => {
             if(!resp.err) {
-                console.log(resp.model)
-                setDataform(resp.model.questions)
-                setNumberQuestions(resp.model.questions.length)
+                setDataform(resp[0].model.questions)
+                setNumberQuestions(resp[0].model.questions.length)
             } else {
                 setDataform(null)
             }
@@ -40,9 +38,17 @@ const QuestionProvider = ({children}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-
     const getDataResult = (data) => {
-        setDataResult(data)
+        const existItem = dataResult.findIndex((el) => el.question === data.question) !== -1;
+        const itemIndex = dataResult.findIndex((el) => el.question === data.question);
+
+        if(existItem) {
+            const newState = [...dataResult]
+            newState[itemIndex] = data
+            setDataResult(newState)
+        } else {
+            setDataResult([...dataResult, data])
+        }
     }
 
     const handleNextbtn = () => {

@@ -7,14 +7,11 @@ const QuestionYesNo = ({data}) => {
     const {numberQuestions, currentPage, dataResult, getDataResult} = useContext(QuestionContext)
 
     const getValue = (option) => {
-
         getDataResult({
-            ...dataResult,
-            [option.name]: option.answer
+            question: option.name,
+            answer: option.answer,
         })
-
         console.log(dataResult)
-
     }
 
     return (
@@ -31,7 +28,7 @@ const QuestionYesNo = ({data}) => {
                                 <input 
                                     type="radio" 
                                     id={`${option.name}_${option.value}`} 
-                                    onChange={ e => getValue(option) }
+                                    onChange={ () => getValue(option) }
                                     name={option.name} 
                                     className="required" 
                                     value={option.value} />

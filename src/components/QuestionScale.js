@@ -4,7 +4,15 @@ import { QuestionContext } from './../context/QuestionsContext';
 
 const QuestionScale = ({data}) => {
 
-    const {numberQuestions, currentPage} = useContext(QuestionContext)
+    const {numberQuestions, currentPage, dataResult, getDataResult} = useContext(QuestionContext)
+
+    const getValue = (option) => {
+        getDataResult({
+            question: option.name,
+            answer: option.answer,
+        })
+        console.log(dataResult)
+    }
 
     return (
         <div className="step mt-3 mt-sm-0">
@@ -22,6 +30,7 @@ const QuestionScale = ({data}) => {
                                 <input 
                                     type="radio" 
                                     id={`${option.name}_${option.value}`}  
+                                    onChange={ () => getValue(option) }
                                     name={option.name} 
                                     className="required" 
                                     value={option.value} />
