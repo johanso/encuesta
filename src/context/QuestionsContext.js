@@ -6,6 +6,7 @@ export const QuestionContext = createContext();
 const QuestionProvider = ({children}) => {
 
     const [dataForm, setDataform] = useState([]);
+    const [dataResult, setDataResult] = useState([]);
     const [numberQuestions, setNumberQuestions] = useState(0);
     const [currentPage, setcurrentPage] = useState(1);
     const [itemsPerPage, setitemsPerPage] = useState(1);
@@ -22,7 +23,6 @@ const QuestionProvider = ({children}) => {
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = dataForm.slice(indexOfFirstItem, indexOfLastItem);
 
-
     const api = helpHttp()
     const url = "http://34.238.123.231:3080"
 
@@ -38,6 +38,18 @@ const QuestionProvider = ({children}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+    const getDataResult = (data) => {
+        const existItem = dataResult.findIndex((el) => el.question === data.question) !== -1;
+        const itemIndex = dataResult.findIndex((el) => el.question === data.question);
+
+        if(existItem) {
+            const newState = [...dataResult]
+            newState[itemIndex] = data
+            setDataResult(newState)
+        } else {
+            setDataResult([...dataResult, data])
+        }
+    }
 
     const handleNextbtn = () => {
         setcurrentPage(currentPage + 1);
@@ -62,6 +74,8 @@ const QuestionProvider = ({children}) => {
         currentPage,
         setitemsPerPage,
         setpageNumberLimit,
+        dataResult,
+        getDataResult,
         pages,
         handleNextbtn,
         handlePrevbtn,
