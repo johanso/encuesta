@@ -7,8 +7,6 @@ import QuestionScale from './QuestionScale';
 import QuestionYesNo from './QuestionYesNo';
 import InfoQuestions from './InfoQuestions';
 
-import logo from "../img/logo_talento_humano.png";
-
 const MultiStepForm = () => {
 
     const {
@@ -73,7 +71,6 @@ const MultiStepForm = () => {
                     </div>
                 </div> 
             </div>
-            <center><img src={logo} alt="logo" className="align-items-center d-flex logo-header" /></center>
         </>
     )
 }
