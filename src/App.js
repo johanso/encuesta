@@ -21,7 +21,16 @@ function App() {
 
    return (
       <QuestionProvider>
-         <div className="wrapper_centering">
+
+         <header className="bg-white shadow-sm">
+            <div className="row">
+               <div className="col-12">
+                  <img src={logo} alt="logo" height="60" />
+               </div>
+            </div>
+         </header>
+
+         <div className="wrapper_centering py-4">
             <div className="container_centering">
                <div className="container">
 
@@ -34,9 +43,6 @@ function App() {
                </div>
             </div>
          </div>
-         <footer>
-               <center><img src={logo} alt="logo" className="logo-footer"/></center>
-         </footer>
       </QuestionProvider>
    );
 }
