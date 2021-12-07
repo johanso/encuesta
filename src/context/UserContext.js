@@ -8,7 +8,7 @@ const UserProvider = ({children}) => {
     const [dataForm, setDataform] = useState([]);
 
     const api = helpHttp()
-    const url = "/employee/byIdentification/11201970"
+    const url = "http://34.238.123.231:3080"
 
     const dataInputUser = {
         email: "administracion@qvort.com",
@@ -16,7 +16,7 @@ const UserProvider = ({children}) => {
     }
 
     useEffect(() => {
-        api.post(url, dataInputUser).then(resp => {
+        api.get(url + `/employee/byIdentification/11201970`, dataInputUser).then(resp => {
             console.log(resp)
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps

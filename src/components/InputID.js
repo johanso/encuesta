@@ -30,7 +30,7 @@ const InputID = ({getUserValid}) => {
                         <div className="row w-100">
                             <div className="col-12 col-md-8 my-1 p-0">
                                 <input 
-                                    type="text" 
+                                    type="number" 
                                     onChange={ e => setIdNumber(e.target.value) }
                                     className="form-control" 
                                     placeholder="Número de cédula" />
@@ -40,7 +40,7 @@ const InputID = ({getUserValid}) => {
                                     type="submit" 
                                     name="backward" 
                                     className="align-self-stretch backward bg-warning mt-sm-0 w-100">
-                                    Acceder
+                                    EMPECEMOS!
                                 </button>
                             </div>
                         </div>

@@ -24,13 +24,13 @@ const QuestionProvider = ({children}) => {
 
 
     const api = helpHttp()
-    const url = "http://localhost:5000/dataForm"
+    const url = "http://34.238.123.231:3080"
 
     useEffect(() => {
-        api.get(url).then(resp => {
+        api.get(url + `/formulary/first`).then(resp => {
             if(!resp.err) {
-                setDataform(resp[0].model.questions)
-                setNumberQuestions(resp[0].model.questions.length)
+                setDataform(resp.model.questions)
+                setNumberQuestions(resp.model.questions.length)
             } else {
                 setDataform(null)
             }

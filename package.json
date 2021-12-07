@@ -21,7 +21,6 @@
     "eject": "react-scripts eject",
     "fake-api": "json-server --watch src/api/formulary-response.json --port 5000"
   },
-  
   "eslintConfig": {
     "extends": [
       "react-app",
