@@ -18,7 +18,7 @@ const InfoQuestions = () => {
                     </div> 
                 :   <div className="main_title_1">
                         <h1 className="text-warning">CUESTIONARIO CLIMA ORGANIZACIONAL</h1>
-                        <h4>Marca sólo una opción indicando tu grado de acuerdo o desacuerdo con las siguientes afirmaciones, siendo 1 totalmente deacuerdo y 10 totlamente en desacuerdo.</h4>
+                        <p>Marca sólo una opción indicando tu grado de acuerdo o desacuerdo con las siguientes afirmaciones, siendo <em className="text-warning">1</em> totalmente de acuerdo y <em className="text-warning">10</em> totlamente en desacuerdo.</p>
                     </div> 
             }
             

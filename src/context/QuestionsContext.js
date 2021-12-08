@@ -1,9 +1,15 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 import { helpHttp } from './../helpers/helpHttp';
+// Context
+import { UserContext } from './../context/UserContext';
 
 export const QuestionContext = createContext();
 
 const QuestionProvider = ({children}) => {
+
+    const{ REACT_APP_URL_SERVER } = process.env;
+
+    const { dataUser } = useContext(UserContext)
 
     const [dataForm, setDataform] = useState([]);
     const [dataResult, setDataResult] = useState([]);
@@ -13,6 +19,8 @@ const QuestionProvider = ({children}) => {
     const [pageNumberLimit, setpageNumberLimit] = useState(1);
     const [maxPageNumberLimit, setmaxPageNumberLimit] = useState(1);
     const [minPageNumberLimit, setminPageNumberLimit] = useState(0);
+    const [isChecked, setIsChecked] = useState(false)
+    const [ViewGretting, setViewGratting] = useState(false)
 
     const pages = [];
     for (let i = 1; i <= Math.ceil(dataForm.length / itemsPerPage); i++) {
@@ -24,36 +32,41 @@ const QuestionProvider = ({children}) => {
     const currentItems = dataForm.slice(indexOfFirstItem, indexOfLastItem);
 
     const api = helpHttp()
-    // const url = "http://localhost:5000/dataForm"
-    const url = "http://34.238.123.231:3080"
-
-    // useEffect(() => {
-    //     api.get(url).then(resp => {
-    //         if(!resp.err) {
-    //             setDataform(resp[0].model.questions)
-    //             setNumberQuestions(resp[0].model.questions.length)
-    //         } else {
-    //             setDataform(null)
-    //         }
-    //     })
-    // // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [])
+    const url = REACT_APP_URL_SERVER
 
     useEffect(() => {
-        api.get(`${url}/formulary/first`).then(resp => {
-            if(!resp.err) {
-                setDataform(resp.model.questions)
-                setNumberQuestions(resp.model.questions.length)
+        getDataServer()
+        setViewGratting(false)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dataUser])
+
+    const getDataServer = () => {
+
+        if( dataUser ) {
+            api.get(`${url}/formulary/first`).then(resp => {
+                if(!resp.error) {
+                    setDataform(resp.model.questions)
+                    setNumberQuestions(resp.model.questions.length)
+                } else {
+                    setDataform(null)
+                }
+            })
+        }
+    }
+
+    const sendDataServer = (dataToSend) => {
+        api.post(`${url}/employee-answers`, { body: dataToSend}).then(resp => {
+            if(!resp.error) {
+                setViewGratting(true)
             } else {
-                setDataform(null)
+                console.log(resp.error)
             }
         })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }
 
     const getDataResult = (data) => {
-        const existItem = dataResult.findIndex((el) => el.question === data.question) !== -1;
-        const itemIndex = dataResult.findIndex((el) => el.question === data.question);
+        const existItem = dataResult.findIndex((el) => el.name === data.name) !== -1;
+        const itemIndex = dataResult.findIndex((el) => el.name === data.name);
 
         if(existItem) {
             const newState = [...dataResult]
@@ -70,6 +83,7 @@ const QuestionProvider = ({children}) => {
             setmaxPageNumberLimit(maxPageNumberLimit + pageNumberLimit);
             setminPageNumberLimit(minPageNumberLimit + pageNumberLimit);
         }
+        setIsChecked(false)
     };
 
     const handlePrevbtn = () => {
@@ -85,13 +99,17 @@ const QuestionProvider = ({children}) => {
         numberQuestions,
         currentItems,
         currentPage,
+        dataResult,
+        pages,
+        isChecked, 
+        ViewGretting,
         setitemsPerPage,
         setpageNumberLimit,
-        dataResult,
         getDataResult,
-        pages,
         handleNextbtn,
         handlePrevbtn,
+        setIsChecked,
+        sendDataServer
     }
 
     return  <QuestionContext.Provider value={data}>

@@ -8,8 +8,10 @@ const QuestionYesNo = ({data}) => {
 
     const getValue = (option) => {
         getDataResult({
-            question: option.name,
+            id: option.name,
             answer: option.answer,
+            question: 'Pregunta'
+
         })
         console.log(dataResult)
     }

@@ -1,25 +1,43 @@
 import React, {useContext} from 'react'
 // context
 import { QuestionContext } from './../context/QuestionsContext';
+import { UserContext } from './../context/UserContext';
 // Components
 import Loader from './Loader';
 import QuestionScale from './QuestionScale';
 import QuestionYesNo from './QuestionYesNo';
 import InfoQuestions from './InfoQuestions';
+import GrattingUser from './GrattingUser';
+// Icon
+import { MdKeyboardArrowRight, MdSend } from "react-icons/md";
 
 const MultiStepForm = () => {
-
     const {
         dataForm,
-        handlePrevbtn, 
+        dataResult,
         handleNextbtn, 
+        sendDataServer,
         currentPage,
         currentItems,
-        pages
+        numberQuestions,
+        pages,
+        isChecked,
+        ViewGretting
     } = useContext(QuestionContext)
+    const {dataUser} = useContext(UserContext)
+
+    const handleSendData = () => {
+        const dataToSend = {
+            user_id: dataUser._id,
+            formulary: dataResult
+        }
+        sendDataServer(dataToSend)
+    }
 
     return (
         <>
+        {
+            !ViewGretting ?
             <div className="row justify-content-between">
                 <div className="col-xl-5 col-lg-6 d-flex align-items-center">
                     <InfoQuestions />
@@ -46,31 +64,37 @@ const MultiStepForm = () => {
                                             )
                                         )}
                                     </ul>
-                                    
                                 }
                             </div>
 
                             <div id="bottom-wizard" className="mb-3">
-                                <button type="button" 
-                                    onClick={handlePrevbtn} 
-                                    disabled={currentPage === pages[0] ? true : false}
-                                    name="backward" 
-                                    className="backward ml-2">
-                                    &laquo; Atras
-                                </button>
-                                <button type="button" 
-                                    onClick={handleNextbtn}
-                                    disabled={currentPage === pages[pages.length - 1] ? true : false}
-                                    name="forward" 
-                                    className="forward ml-2">
-                                    Siguiente &raquo;
-                                </button>
+                                {
+                                    currentPage !== pages[pages.length - 1] &&
+                                    <button type="button" 
+                                        onClick={handleNextbtn}
+                                        disabled={!isChecked}
+                                        name="forward" 
+                                        className="forward">
+                                        Siguiente <MdKeyboardArrowRight />
+                                    </button>
+                                }
+                                {
+                                    currentPage === numberQuestions &&
+                                    <button type="button" 
+                                        onClick={handleSendData}
+                                        disabled={!isChecked}
+                                        className="forward submit">
+                                        Enviar <MdSend />
+                                    </button>
+                                }
                             </div>
 
                         </form>
                     </div>
                 </div> 
-            </div>
+            </div> :
+            <GrattingUser />
+        }
         </>
     )
 }

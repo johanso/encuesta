@@ -4,14 +4,15 @@ import { QuestionContext } from './../context/QuestionsContext';
 
 const QuestionScale = ({data}) => {
 
-    const {numberQuestions, currentPage, dataResult, getDataResult} = useContext(QuestionContext)
+    const {numberQuestions, currentPage, getDataResult, setIsChecked} = useContext(QuestionContext)
 
-    const getValue = (option) => {
+    const getValue = (option, data) => {
         getDataResult({
-            question: option.name,
+            name: option.name,
             answer: option.answer,
+            question: data.question
         })
-        console.log(dataResult)
+        setIsChecked(true)
     }
 
     return (
@@ -30,7 +31,7 @@ const QuestionScale = ({data}) => {
                                 <input 
                                     type="radio" 
                                     id={`${option.name}_${option.value}`}  
-                                    onChange={ () => getValue(option) }
+                                    onChange={ () => getValue(option, data) }
                                     name={option.name} 
                                     className="required" 
                                     value={option.value} />
